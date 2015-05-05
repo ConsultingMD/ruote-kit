@@ -478,6 +478,18 @@ describe '/_ruote/processes' do
 
   end
 
+  describe 'POST /_ruote/processes/search' do
+
+    it 'returns workflows ending with the search suffix' do
+      wfid = launch_nada_process
+
+      post '/_ruote/processes/search', { :suffix => wfid[-8..-1] }
+
+      last_response.status.should == 200
+      body
+    end
+  end
+
   describe 'DELETE /_ruote/processes/:wfid' do
 
     before(:each) do
