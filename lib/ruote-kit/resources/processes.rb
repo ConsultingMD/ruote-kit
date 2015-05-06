@@ -42,6 +42,15 @@ class RuoteKit::Application
     respond_with :process
   end
 
+  post '/_ruote/processes/search' do
+
+    @suffix = params[:suffix]
+
+    @processes = RuoteKit.engine.processes.select { |p| p.wfid.end_with? @suffix }
+
+    respond_with :processes
+  end
+
   put '/_ruote/processes/:wfid' do
 
     @process = RuoteKit.engine.process(params[:wfid])
