@@ -46,7 +46,10 @@ class RuoteKit::Application
 
     @suffix = params[:suffix]
 
-    @processes = RuoteKit.engine.processes.select { |p| p.wfid.end_with? @suffix }
+    @processes = RuoteKit.engine
+                    .process_wfids
+                    .select { |wfid| wfid.end_with? @suffix }
+                    .map    { |wfid| RuoteKit.engine.process(wfid) }
 
     respond_with :processes
   end
