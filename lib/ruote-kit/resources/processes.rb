@@ -20,6 +20,18 @@ class RuoteKit::Application
     haml :processes_new
   end
 
+  get '/_ruote/processes/search/?:q?' do
+
+    @q = params[:q] || ''
+
+    @processes = RuoteKit.engine
+                    .process_wfids
+                    .select { |wfid| wfid.end_with? @q }
+                    .map    { |wfid| RuoteKit.engine.process(wfid) }
+
+    respond_with :processes
+  end
+
   get '/_ruote/processes/:wfid' do
 
     @process = RuoteKit.engine.process(params[:wfid])
@@ -40,18 +52,6 @@ class RuoteKit::Application
       }
 
     respond_with :process
-  end
-
-  post '/_ruote/processes/search' do
-
-    @suffix = params[:suffix]
-
-    @processes = RuoteKit.engine
-                    .process_wfids
-                    .select { |wfid| wfid.end_with? @suffix }
-                    .map    { |wfid| RuoteKit.engine.process(wfid) }
-
-    respond_with :processes
   end
 
   put '/_ruote/processes/:wfid' do
