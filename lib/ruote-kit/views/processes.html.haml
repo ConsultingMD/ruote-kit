@@ -3,10 +3,10 @@
 
 %h1 processes
 
-%form{ :method => 'POST', :action => '/_ruote/processes/search' }
-  %label{ :for => 'suffix' }
+%form{ :method => 'get', :action => '/_ruote/processes/search' }
+  %label{ :for => 'q' }
     Suffix (Case ID):
-  %input{ :type => 'text', :name => 'suffix', :value => @suffix }
+  %input{ :type => 'text', :name => 'q', :value => @q }
     %input{ :type => 'submit', :value => 'Search' }
 
 = haml :_pagination, :layout => false
