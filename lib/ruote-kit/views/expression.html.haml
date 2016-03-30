@@ -96,6 +96,14 @@
         - if workitem = @process.stored_workitems.find { |wi| wi.fei == @expression.fei }
           GET
           = alink(:workitems, @expression.fei.sid)
+    %tr
+      %td
+        stash
+      %td
+        - stash = @expression.h.stash
+        - stash = Rufus::Json.pretty_encode(stash)
+        - rows = stash.split("\n").size
+        %textarea#tree{ :name => 'stash', :cols => 70, :rows => rows } #{stash}
 
     %tr
       %td.no_border{ :colspan => 2 }
