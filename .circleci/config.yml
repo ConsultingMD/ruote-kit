@@ -3,12 +3,15 @@ version: 2.1
 workflows:
   build:
     jobs:
-      - test
+      - build:
+          filters:
+            tags:
+              only: /.*/
       - publish:
           requires:
-            - test
+            - build
           context:
-            - dod-pypi
+            - gemfury
           filters:
             # only publish gem after cutting tag
             tags:
@@ -16,8 +19,9 @@ workflows:
             branches:
               ignore: /.*/
 
+
 jobs:
-  test:
+  build:
     docker:
       - image: cimg/ruby:2.7
     steps:
@@ -25,7 +29,7 @@ jobs:
       - restore_cache:
           keys:
             - service-{{ checksum "ruote-kit.gemspec" }}
-      - run: bundle check || bundle install --path vendor/bundle
+      - run: bundle check || bundle config set --local path 'vendor/bundle'
       - save_cache:
           paths:
             - vendor/bundle
