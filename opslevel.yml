@@ -1,0 +1,12 @@
+version: 1
+service:
+  language: ruby
+  description: A wrapper around the ruote workflow engine, built as a modular Sinatra application
+repositories:
+- name: ConsultingMD/ruote-kit
+  path: /
+  provider: github
+- name: ConsultingMD/ruote-kit
+  path: /platform
+  provider: github
+  display_name: Platform Folder
