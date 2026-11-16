@@ -94,7 +94,7 @@ task :readme do
 
   exec(
     'mkdir tmp; ' +
-    'pandoc -s README.mdown -o tmp/README.html; ' +
+    'pandoc -s README.md -o tmp/README.html; ' +
     'open tmp/README.html')
 end
 
